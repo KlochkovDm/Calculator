@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="main_text">35sp</dimen>
+    <dimen name="calc_button_margin">2dp</dimen>
+    <dimen name="main_margin">10dp</dimen>
+    <dimen name="text_view_paddings">8dp</dimen>
+    <dimen name="text_view_padding_end">16dp</dimen>
+    <dimen name="iconPadding">0dp</dimen>
+
+
+</resources>

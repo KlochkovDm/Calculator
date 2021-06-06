@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="calc_button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/main_text</item>
+        <item name="android:layout_margin">@dimen/calc_button_margin</item>
+        <item name="android:backgroundTint">@color/calc_button</item>
+    </style>
+
+    <style name ="view">
+        <item name="android:layout_margin">@dimen/main_margin</item>
+        <item name="android:textSize">@dimen/main_text</item>
+        <item name="android:paddingTop">@dimen/text_view_paddings</item>
+        <item name="android:paddingBottom">@dimen/text_view_paddings</item>
+        <item name="android:paddingStart">@dimen/text_view_paddings</item>
+        <item name="android:paddingEnd">@dimen/text_view_padding_end</item>
+        <item name="android:background">@drawable/input_view</item>
+        <item name="android:gravity">end</item>
+    </style>
+
+
+
+</resources>
