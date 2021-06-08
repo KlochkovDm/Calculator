@@ -1,5 +1,6 @@
 package com.example.calculator;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -7,6 +8,8 @@ import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String CALCULATOR_STATE = "CALCULATOR_STATE";
 
     private TextView view_input;
     private TextView view_result;
@@ -16,6 +19,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (savedInstanceState == null) {
+            calculator = new Calculator();
+        } else {
+            calculator = savedInstanceState.getParcelable(CALCULATOR_STATE);
+        }
 
         int[] numberIds = new int[] {
                 R.id.key_0,
@@ -43,8 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         view_input = findViewById(R.id.view_input);
         view_result = findViewById(R.id.view_result);
-
-        calculator = new Calculator();
+        updateTexts();
 
         View.OnClickListener numberButtonClickListener = new View.OnClickListener() {
             @Override
@@ -70,6 +78,26 @@ public class MainActivity extends AppCompatActivity {
         for (int actionsId : actionsIds) {
             findViewById(actionsId).setOnClickListener(actionButtonOnclickListener);
         }
+    }
 
+//    @Override
+//    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+//        calculator = savedInstanceState.getParcelable(CALCULATOR_STATE);
+//        super.onRestoreInstanceState(savedInstanceState);
+//    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putParcelable(CALCULATOR_STATE,calculator);
+        super.onSaveInstanceState(outState);
+    }
+
+    private void updateTexts() {
+        if (calculator.getResult() != null) {
+            view_result.setText(calculator.getResult());
+        }
+        if (calculator.getInput() != null) {
+            view_input.setText(calculator.getInput());
+        }
     }
 }

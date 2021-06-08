@@ -1,12 +1,54 @@
 package com.example.calculator;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Calculator extends AppCompatActivity {
+public class Calculator extends AppCompatActivity implements Parcelable {
+
     private double firstArg;
     private double secondArg;
     private String result;
-    private StringBuilder inputStr = new StringBuilder();
+
+    protected Calculator(Parcel in) {
+        firstArg = in.readDouble();
+        secondArg = in.readDouble();
+        result = in.readString();;
+    }
+
+    public String getInput() {
+       return inputStr.toString();}
+
+    public String getResult() {
+        return result;}
+             
+
+    public static final Creator<Calculator> CREATOR = new Creator<Calculator>() {
+        @Override
+        public Calculator createFromParcel(Parcel in) {
+            return new Calculator(in);
+        }
+
+        @Override
+        public Calculator[] newArray(int size) {
+            return new Calculator[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeDouble(firstArg);
+        dest.writeDouble(secondArg);
+        dest.writeString(result);
+    }
+
+    private final StringBuilder inputStr = new StringBuilder();
 
     private State state;
     private enum State {
@@ -138,10 +180,6 @@ public class Calculator extends AppCompatActivity {
         }
     }
 
-    public String getInput() {
-       return inputStr.toString();}
-    public String getResult() {
-        return result;}
 
     public double calculation (Operation o, double firstArg, double secondArg) {
         double result = 0;
