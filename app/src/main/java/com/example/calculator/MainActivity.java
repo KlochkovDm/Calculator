@@ -3,9 +3,12 @@ package com.example.calculator;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import java.security.PrivateKey;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,16 +18,18 @@ public class MainActivity extends AppCompatActivity {
     private TextView view_result;
     private Calculator calculator;
 
+    private ThemeStorage storage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        storage = new ThemeStorage(this);
+        setTheme(storage.getTheme().getResource());
+
         setContentView(R.layout.activity_main);
 
-        if (savedInstanceState == null) {
-            calculator = new Calculator();
-        } else {
-            calculator = savedInstanceState.getParcelable(CALCULATOR_STATE);
-        }
+        calculator = savedInstanceState == null ? new Calculator() : savedInstanceState.getParcelable(CALCULATOR_STATE);
 
         int[] numberIds = new int[] {
                 R.id.key_0,
@@ -78,6 +83,18 @@ public class MainActivity extends AppCompatActivity {
         for (int actionsId : actionsIds) {
             findViewById(actionsId).setOnClickListener(actionButtonOnclickListener);
         }
+
+        findViewById(R.id.key_switch_theme).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(storage.getTheme().getKey().equals(AppTheme.DARK.getKey())){;
+                    storage.setTheme(AppTheme.LIGHT);
+                } else {
+                    storage.setTheme(AppTheme.DARK);
+                };
+                recreate();
+            }
+        });
     }
 
 //    @Override
@@ -92,12 +109,24 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
     }
 
+//    private void updateTexts() {
+//        if (calculator.getResult() != null) {
+//            view_result.setText(calculator.getResult());
+//        }
+//        if (calculator.getInput() != null) {
+//            view_input.setText(calculator.getInput());
+//        }
+//    }
+
     private void updateTexts() {
-        if (calculator.getResult() != null) {
-            view_result.setText(calculator.getResult());
-        }
-        if (calculator.getInput() != null) {
-            view_input.setText(calculator.getInput());
+        setTextToTextView(calculator.getResult(), view_result);
+        setTextToTextView(calculator.getInput(), view_input);
+    }
+
+    private void setTextToTextView(String text, TextView textView) {
+        if (text != null) {
+            textView.setText(text);
         }
     }
+
 }
