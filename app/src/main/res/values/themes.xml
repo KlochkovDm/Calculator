@@ -14,4 +14,15 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="Theme.Calculator.Light">
+        <item name="colorPrimary">@color/calc_button_light</item>
+        <item name="android:background">@color/white</item>
+        <item name="colorOnPrimary">@color/black</item>
+    </style>
+
+    <style name="Theme.Calculator.Dark">
+        <item name="colorPrimary">@color/calc_button_dark</item>
+        <item name="android:background">@color/background_dark</item>
+    </style>
+
 </resources>
